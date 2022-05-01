@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div>
+            <h1>Amazon Seller Dashboard</h1>
+        </div>
+        <form action="" id="detailsEntryForm">
+            <input type="text" id="name" placeholder="Product name">
+            <input type="text" id="category" placeholder="Category">
+            <input type="text" id="image" placeholder="Image Url">
+            <input type="number" id="price" placeholder="Price">
+            <select name="" id="gender">
+                <option value="select">select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <input type="text" id="sold" placeholder="Sold">
+            <input type="submit" value="add">
+        </form>
+    </div>    
+</body>
+<script>
+    var products=JSON.parse(localStorage.getItem("Products")) || [];
+    document.getElementById("detailsEntryForm").addEventListener("submit",addElement);
+
+    var productObject=function(pr,cat,image,price,gend,sold=false){
+        this.productName=pr;
+        this.Category=cat;
+        this.ImageUrl=image;
+        this.price=price;
+        this.gender=gend;
+        this.sold=sold
+    }
+
+    function addElement(){
+        event.preventDefault();
+        var productName=document.querySelector("#name").value;
+        var Category=document.querySelector("#category").value;
+        var ImageUrl=document.querySelector("#image").value;
+        var price=document.querySelector("#price").value;
+        var gender=document.querySelector("#gender").value;
+        var sold=document.querySelector("#sold").value;
+
+        if(gender=="select"|| productName=="" || Category=="" || ImageUrl=="" || price==""){
+            alert("please enter valid details")
+        }else{
+            var temp=new productObject(productName,Category,ImageUrl,price,gender,sold);
+            products.push(temp);
+            localStorage.setItem("Products",JSON.stringify(products));
+            alert("product added ")
+        }
+        
+        
+    }
+</script>
+</html>
